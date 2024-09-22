@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClinicsPlus</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- InputMask -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.6/jquery.inputmask.min.js"></script>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <img src="logo.jpg" alt="ClinicsPlus Logo">
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#banner">Главная</a></li>
+                <li><a href="#features">Функции</a></li>
+                <li><a href="#pricing">Тарифные планы</a></li>
+                <li><a href="#contacts">Контакты</a></li>
+                <li><a href="#connect-clinic">Подключить клинику</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Banner Section -->
+    <section id="banner">
+        <div class="banner-content">
+            <h1>ClinicsPlus – найди свою клинику и запишись онлайн!</h1>
+            <p>Приложение ClinicsPlus помогает вам быстро найти медицинские учреждения, сравнить цены и записаться на прием онлайн.</p>
+            <div class="download-buttons">
+                <a href="#" class="ios">Скачать для iOS</a>
+                <a href="#" class="android">Скачать для Android</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connect Clinic Form -->
+    <section id="connect-clinic">
+        <h2>Подключите свою клинику к ClinicsPlus</h2>
+        <p>Оставьте заявку, и мы свяжемся с вами для подключения...</p>
+        <form id="connect-clinic-form">
+            <div class="form-group">
+                <label for="clinic-name">Название клиники:</label>
+                <input type="text" id="clinic-name" name="clinic-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-name">Имя контактного лица:</label>
+                <input type="text" id="contact-name" name="contact-name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone-code">Код страны:</label>
+                <select id="phone-code" name="phone-code" required>
+                    <option value="+7">Россия (+7)</option>
+                    <option value="+374">Армения (+374)</option>
+                    <option value="+994">Азербайджан (+994)</option>
+                    <option value="+375">Беларусь (+375)</option>
+                    <option value="+995">Грузия (+995)</option>
+                    <option value="+996">Киргизия (+996)</option>
+                    <option value="+373">Молдова (+373)</option>
+                    <option value="+992">Таджикистан (+992)</option>
+                    <option value="+993">Туркменистан (+993)</option>
+                    <option value="+998">Узбекистан (+998)</option>
+                    <option value="+91">Индия (+91)</option>
+                    <option value="+90">Турция (+90)</option>
+                    <option value="+66">Таиланд (+66)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Телефон: (не забудьте выбрать код страны)</label>
+                <input type="tel" id="phone" name="phone" placeholder="Ваш телефон" required>
+            </div>
+
+            <div class="form-group">
+                <label for="questions">Дополнительные вопросы (опционально):</label>
+                <textarea id="questions" name="questions"></textarea>
+            </div>
+
+            <button type="submit">Подключить клинику</button>
+        </form>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contacts">
+        <h3>Контактная информация</h3>
+        <p>Email: info@clinicsplus.com</p>
+        <p>Телефон: +123 456 7890</p>
+    </footer>
+
+    <script>
+        document.getElementById('connect-clinic-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const clinicName = document.getElementById('clinic-name').value;
+            const contactName = document.getElementById('contact-name').value;
+            const email = document.getElementById('email').value;
+            const phoneCode = document.getElementById('phone-code').value;
+            const phone = document.getElementById('phone').value;
+            const questions = document.getElementById('questions').value;
+
+            const message = `
+                Новая заявка на подключение клиники:
+                Название клиники: ${clinicName}
+                Контактное лицо: ${contactName}
+                Email: ${email}
+                Телефон: ${phoneCode} ${phone}
+                Дополнительные вопросы: ${questions}
+            `;
+
+            const telegramUrl = `https://api.telegram.org/bot7373812547:AAGRQkukT5gUMSSApucrKjHjU1lINCLpOr8/sendMessage?chat_id=-4222268084&text=${encodeURIComponent(message)}`;
+
+            fetch(telegramUrl)
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = 'success.html';
+                    } else {
+                        alert('Ошибка отправки данных. Пожалуйста, попробуйте еще раз.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                    alert('Ошибка отправки данных. Пожалуйста, попробуйте еще раз.');
+                });
+        });
+    </script>
+</body>
+</html>
